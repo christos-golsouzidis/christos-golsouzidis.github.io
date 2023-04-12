@@ -1,0 +1,39 @@
+h1.cn {
+    text-align: center;
+}
+
+h2.cb {
+    text-align: center;
+    color: purple;
+}
+
+
+input.ln {
+    margin-left: 50px;
+    border-radius: 8px;
+    border: 1px solid;
+    padding: 0.8em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: blue;
+    color: white;
+    cursor: pointer;
+    /*transition: border-color 0.25s;
+    transition-duration: 0.4s;*/
+}
+
+input.ln:hover {
+    margin-left: 50px;
+    border-radius: 8px;
+    border: 1px solid;
+    padding: 0.8em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: white;
+    color: blue;
+    cursor: pointer;
+    /*transition: border-color 0.25s;
+    transition-duration: 0.4s;*/
+}
