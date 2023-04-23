@@ -9,7 +9,7 @@ h2.cb {
 
 
 input.ln {
-    margin-left: 50px;
+    margin-left: 20px;
     border-radius: 8px;
     border: 1px solid;
     padding: 0.8em 1.2em;
@@ -19,12 +19,10 @@ input.ln {
     background-color: blue;
     color: white;
     cursor: pointer;
-    /*transition: border-color 0.25s;
-    transition-duration: 0.4s;*/
 }
 
 input.ln:hover {
-    margin-left: 50px;
+    margin-left: 20px;
     border-radius: 8px;
     border: 1px solid;
     padding: 0.8em 1.2em;
@@ -34,12 +32,23 @@ input.ln:hover {
     background-color: white;
     color: blue;
     cursor: pointer;
-    /*transition: border-color 0.25s;
-    transition-duration: 0.4s;*/
 }
 
-div.skills {
-    /*margin-left: 50px;
-    */
-    text-align: center;
+div._general {
+    margin-top: 20px;
+    display: flex;
+    margin-left: 20px;
+}
+
+div.title{
+    flex-wrap: nowrap;
+}
+
+h2._title{
+    width:300px;
+    flex-wrap: nowrap;
+}
+
+#image {
+    margin: auto;
 }
