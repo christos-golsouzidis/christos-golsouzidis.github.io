@@ -4,7 +4,7 @@ h1.cn {
 
 h2.cb {
     text-align: center;
-    color: purple;
+    color: #606060;
 }
 
 
@@ -36,4 +36,10 @@ input.ln:hover {
     cursor: pointer;
     /*transition: border-color 0.25s;
     transition-duration: 0.4s;*/
+}
+
+div.skills {
+    /*margin-left: 50px;
+    */
+    text-align: center;
 }
