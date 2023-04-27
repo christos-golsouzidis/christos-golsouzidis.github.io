@@ -1,12 +1,11 @@
-/* 
-    root
-*/
 
+/*
+    My projects
+*/
 
 body {
     font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
     font-size: large;
-    position: relative;
 }
 
 div.header {
@@ -22,18 +21,6 @@ div.header {
 h1.cn {
     text-align: center;
     width: 1400px;
-    margin-bottom: 10px;
-}
-
-h2.cb {
-    text-align: center;
-    color: #606060;
-    width: 1400px;
-    margin-bottom: 20px;
-}
-
-div.buttons {
-    margin-bottom: 20px;
 }
 
 input.ln {
@@ -62,67 +49,6 @@ input.ln:hover {
     cursor: pointer;
 }
 
-div.sidebox {
-    margin-left: 0px;
-    margin-top: 0px;
-    margin-bottom: 0px;
-    padding-bottom: 0px;
-    display: flex;
-    padding-left: 0px;
-}
-
-p.about {
-    width: 800px;
-    padding-left: 20px;
-}
-
-div.u-lines {
-    margin-top: 20px;
-}
-
-#dsl {
-    padding-left: 20px;
-    color: blue
-}
-
-#dal {
-    padding-left: 20px;
-    color: goldenrod
-}
-
-#bel {
-    padding-left: 20px;
-    color: green
-}
-
-#fel {
-    padding-left: 20px;
-    color: purple
-}
-
-#del {
-    padding-left: 20px;
-    color: red
-}
-
-
-
-
-
-div.title {
-    flex-wrap: nowrap;
-    background-color: beige;
-}
-
-h3.text {
-    width: 300px;
-    flex-wrap: nowrap;
-    margin-left: 30px;
-}
-
-div.end {
-    padding-bottom: 40px;
-}
 
 div.footer {
     background-color: darkblue;
@@ -160,7 +86,7 @@ div.links {
     align-items: center;
 }
 
-div.footerelem {
+div.footerelem{
     margin-top: 0px;
     margin-bottom: 0px;
     justify-content: center;
