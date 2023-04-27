@@ -1,12 +1,33 @@
+body{
+    font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
+    font-size: large;
+}
+
+div.header {
+    background-color:beige ;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
 h1.cn {
     text-align: center;
+    width: 1400px;
 }
 
 h2.cb {
     text-align: center;
     color: #606060;
+    width: 1400px;
 }
 
+p.about{
+    width: 800px;
+    margin-left: 20px;
+}
+
+div.buttons{
+    margin-bottom: 20px;
+}
 
 input.ln {
     margin-left: 20px;
@@ -34,21 +55,42 @@ input.ln:hover {
     cursor: pointer;
 }
 
-div._general {
-    margin-top: 20px;
+div.sidebox {
+    margin-top: 0px;
     display: flex;
     margin-left: 20px;
 }
 
-div.title{
+div.title {
     flex-wrap: nowrap;
+    background-color:beige;
 }
 
-h2._title{
-    width:300px;
+h2.text {
+    width: 300px;
     flex-wrap: nowrap;
+    margin-left: 30px;
 }
 
-#image {
-    margin: auto;
+div.footer {
+    background-color:black ;
+    color: beige;
+    display: flex;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+div.contact{
+    margin-left: 20px;
+    width: 300px;
+}
+
+div.links{
+    margin-left: 20px;
+    display: flex;
+}
+
+.footerelem{
+
+    margin-left: 50px;
 }
