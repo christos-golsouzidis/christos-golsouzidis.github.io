@@ -90,7 +90,8 @@ div.links {
     display: flex;
 }
 
-.footerelem {
+p,
+a .footerelem {
 
     margin-left: 50px;
 }
