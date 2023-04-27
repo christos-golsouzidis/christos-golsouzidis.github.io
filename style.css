@@ -1,10 +1,10 @@
-/*body{
+body {
     font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
     font-size: large;
-}*/
+}
 
 div.header {
-    background-color:beige ;
+    background-color: beige;
     margin-left: 20px;
     margin-right: 20px;
 }
@@ -20,12 +20,12 @@ h2.cb {
     width: 1400px;
 }
 
-p.about{
+p.about {
     width: 800px;
     margin-left: 20px;
 }
 
-div.buttons{
+div.buttons {
     margin-bottom: 20px;
 }
 
@@ -63,7 +63,7 @@ div.sidebox {
 
 div.title {
     flex-wrap: nowrap;
-    background-color:beige;
+    background-color: beige;
 }
 
 h2.text {
@@ -73,24 +73,24 @@ h2.text {
 }
 
 div.footer {
-    background-color:black ;
+    background-color: rgb(210, 210, 187);
     color: beige;
     display: flex;
     margin-left: 20px;
     margin-right: 20px;
 }
 
-div.contact{
+div.contact {
     margin-left: 20px;
     width: 300px;
 }
 
-div.links{
+div.links {
     margin-left: 20px;
     display: flex;
 }
 
-.footerelem{
+.footerelem {
 
     margin-left: 50px;
 }
