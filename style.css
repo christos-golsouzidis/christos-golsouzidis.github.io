@@ -11,29 +11,29 @@ body {
 
 div.header {
     background-color: beige;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 2dvh;
+    padding-bottom: 2dvh;
     margin-top: 0;
     margin-left: 0;
     margin-right: 0;
-    margin-bottom: 20px;
+    margin-bottom: 4dvh;
 }
 
 h1.cn {
     text-align: center;
-    width: 1400px;
-    margin-bottom: 10px;
+    width: 100dvw;
+    margin-bottom: 4dvh;
 }
 
 h2.cb {
     text-align: center;
     color: #606060;
-    width: 1400px;
-    margin-bottom: 20px;
+    width: 100dvw;
+    margin-bottom: 4dvh;
 }
 
 div.buttons {
-    margin-bottom: 20px;
+    margin-bottom: 4dvh;
 }
 
 input.ln {
@@ -72,36 +72,36 @@ div.sidebox {
 }
 
 p.about {
-    width: 800px;
-    padding-left: 20px;
+    width: 75dvw;
+    padding-left: 3.5dvw;
 }
 
 div.u-lines {
-    margin-top: 20px;
+    margin-top: 4dvh;
 }
 
 #dsl {
-    padding-left: 20px;
+    padding-left: 3.5dvw;
     color: blue
 }
 
 #dal {
-    padding-left: 20px;
+    padding-left: 3.5dvw;
     color: goldenrod
 }
 
 #bel {
-    padding-left: 20px;
+    padding-left: 3.5dvw;
     color: green
 }
 
 #fel {
-    padding-left: 20px;
+    padding-left: 3.5dvw;
     color: purple
 }
 
 #del {
-    padding-left: 20px;
+    padding-left: 3.5dvw;
     color: red
 }
 
@@ -115,13 +115,13 @@ div.title {
 }
 
 h3.text {
-    width: 300px;
+    width: 15dvw;
     flex-wrap: nowrap;
-    margin-left: 30px;
+    margin-left: 1dvw;
 }
 
 div.end {
-    padding-bottom: 40px;
+    padding-bottom: 8dvh;
 }
 
 div.footer {
@@ -137,13 +137,13 @@ div.contact {
     padding-left: 30px;
     padding-top: 10px;
     padding-bottom: 10px;
-    width: 300px;
+    width: 30%;
     justify-content: center;
 }
 
 h3.footertext {
     color: white;
-    width: 300px;
+    width: 30%;
     margin-top: 0px;
     margin-bottom: 0px;
     flex-wrap: nowrap;
