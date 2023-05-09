@@ -125,7 +125,7 @@ div.end {
 }
 
 div.footer {
-    background-color: darkblue;
+    background-color: rgb(54, 54, 54);
     display: flex;
     margin-left: 0px;
     position: absolute;
