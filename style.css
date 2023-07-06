@@ -4,7 +4,7 @@
 
 
 body {
-    position: relative;
+    /*position: relative;*/
     font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
     font-size: large;
     font-size: 1em;
@@ -63,7 +63,7 @@ input.ln {
     border-radius: 8px;
     border: 1px solid;
     padding: 0.8em 1.2em;
-    font-size: 1em;
+    font-size: 2dvh;
     font-weight: 500;
     font-family: 'Courier New', Courier, monospace;
     background-color: #606060;
@@ -76,7 +76,7 @@ input.ln:hover {
     border-radius: 8px;
     border: 1px solid;
     padding: 0.8em 1.2em;
-    font-size: 1em;
+    font-size: 2dvh;
     font-weight: 500;
     font-family: 'Courier New', Courier, monospace;
     background-color: white;
@@ -131,9 +131,9 @@ div.footer {
     display: flex;
     margin-left: 0;
     padding-bottom: 4dvh;
-    position: absolute;
+    /*position: absolute;*/
     bottom: 0;
-    width: 100dvw;
+    /*width: 100dvw;*/
 }
 
 div.contact {
