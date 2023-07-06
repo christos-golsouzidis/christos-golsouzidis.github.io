@@ -20,13 +20,13 @@ div.header {
     /*margin-bottom: 4dvh;*/
 }
 
-h1.cn {
+h1.header-name {
     text-align: center;
     width: 100dvw;
     margin-bottom: 4dvh;
 }
 
-h2.cb {
+h2.header-position {
     text-align: center;
     color: #606060;
     width: 100dvw;
@@ -34,20 +34,21 @@ h2.cb {
 }
 
 div.sidebox {
-    margin-left: 0;
-    margin-top: 0;
-    margin-bottom: 0;
-    padding-top: 0dvh;
     display: flex;
 }
 
-div.title {
+h3.text {
+    width: 15dvw;
     flex-wrap: nowrap;
+    margin-left: 1dvw;
+}
+
+div.title {
     background-color: beige;
     padding-top: 3dvh;
 }
 
-p.about {
+div.about {
     padding-top: 3dvh;
     width: 75dvw;
     padding-left: 3.5dvw;
@@ -114,19 +115,13 @@ div.u-lines {
 }
 
 #image_kn {
-    width: 75%;
-    /*margin-bottom: 40dvh;*/
-}
-
-
-
-h3.text {
-    width: 15dvw;
-    flex-wrap: nowrap;
-    margin-left: 1dvw;
+    width: 60dvw;
+    margin-bottom: 20dvh;
+    margin-left: 3.5dvw;
 }
 
 div.footer {
+    margin-top: 4dvh;
     background-color: lightgray;
     display: flex;
     margin-left: 0;
