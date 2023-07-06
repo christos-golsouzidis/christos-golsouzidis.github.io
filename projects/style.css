@@ -42,45 +42,21 @@ div.title {
 }
 
 div.github-link {
-    padding-top: 3dvh;
-    width: 75dvw;
-    padding-left: 3.5dvw;
+    margin-left: 3.5dvw;
+    margin-top: 3dvh;
 }
 
-
-div.buttons {
-    padding-top: 3dvh;
-    padding-left: 3.5dvw;
-}
-
-#lds_00 {
-    padding-top: 3dvh;
+img.image {
+    margin-left: 3.5dvw;
+    margin-top: 6dvh;
     width: 20dvw;
-    padding-left: 3.5dvw;
+    border-radius: 10px;
+    border: 2px solid;
+    border-color: black;
 }
 
-#lda_00 {
-    padding-top: 3dvh;
-    width: 20dvw;
-    padding-left: 3.5dvw;
-}
-
-#lfe_00 {
-    padding-top: 3dvh;
-    width: 20dvw;
-    padding-left: 3.5dvw;
-}
-
-#lbe_00 {
-    padding-top: 3dvh;
-    width: 20dvw;
-    padding-left: 3.5dvw;
-}
-
-#ldd_00 {
-    padding-top: 3dvh;
-    width: 20dvw;
-    padding-left: 3.5dvw;
+img.image:hover {
+    border-color: gray;
 }
 
 div.footer {
@@ -89,9 +65,7 @@ div.footer {
     display: flex;
     margin-left: 0;
     padding-bottom: 4dvh;
-    /*position: absolute;*/
     bottom: 0;
-    /*width: 100dvw;*/
 }
 
 div.contact {
@@ -99,17 +73,13 @@ div.contact {
     padding-top: 1.5dvh;
     padding-bottom: 1.5dvh;
     width: 15dvw;
-    /*justify-content: center;*/
 }
 
 h3.footertext {
-    /*color: white;*/
     width: 15dvw;
     margin-top: 0;
     margin-bottom: 0;
     flex-wrap: nowrap;
-    /*justify-content: center;*/
-    /*align-items: center;*/
 }
 
 div.links {
@@ -126,5 +96,4 @@ div.footerelem {
     margin-bottom: 0;
     margin-right: 1.5dvw;
     justify-content: center;
-    /*align-items: center;*/
 }

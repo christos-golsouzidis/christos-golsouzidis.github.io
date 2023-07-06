@@ -54,12 +54,9 @@ div.about {
     padding-left: 3.5dvw;
 }
 
-div.buttons {
+input.projects {
     margin-top: 4dvh;
     margin-bottom: 4dvh;
-}
-
-input.ln {
     margin-left: 3.5dvw;
     border-radius: 8px;
     border: 1px solid;
@@ -72,7 +69,10 @@ input.ln {
     cursor: pointer;
 }
 
-input.ln:hover {
+input.projects:hover {
+    text-decoration: none;
+    margin-top: 4dvh;
+    margin-bottom: 4dvh;
     margin-left: 3.5dvw;
     border-radius: 8px;
     border: 1px solid;
@@ -126,9 +126,7 @@ div.footer {
     display: flex;
     margin-left: 0;
     padding-bottom: 4dvh;
-    /*position: absolute;*/
     bottom: 0;
-    /*width: 100dvw;*/
 }
 
 div.contact {
@@ -136,17 +134,13 @@ div.contact {
     padding-top: 1.5dvh;
     padding-bottom: 1.5dvh;
     width: 15dvw;
-    /*justify-content: center;*/
 }
 
 h3.footertext {
-    /*color: white;*/
     width: 15dvw;
     margin-top: 0;
     margin-bottom: 0;
     flex-wrap: nowrap;
-    /*justify-content: center;*/
-    /*align-items: center;*/
 }
 
 div.links {
@@ -163,5 +157,4 @@ div.footerelem {
     margin-bottom: 0;
     margin-right: 1.5dvw;
     justify-content: center;
-    /*align-items: center;*/
 }
