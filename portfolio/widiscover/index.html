@@ -6,314 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     
 		<link href="../../_app/immutable/assets/app.h-7TMw1Q.css" rel="stylesheet">
-		<link href="../../_app/immutable/assets/14.BeM3-T5k.css" rel="stylesheet">
-		<link href="../../_app/immutable/assets/Navbar.BoTq33O0.css" rel="stylesheet">
-		<link rel="modulepreload" href="../../_app/immutable/entry/start.C4ECRrRN.js">
-		<link rel="modulepreload" href="../../_app/immutable/chunks/CjD61iq1.js">
-		<link rel="modulepreload" href="../../_app/immutable/chunks/F8qmwlC5.js">
-		<link rel="modulepreload" href="../../_app/immutable/chunks/BE87zksH.js">
-		<link rel="modulepreload" href="../../_app/immutable/entry/app.ByRfXRqT.js">
-		<link rel="modulepreload" href="../../_app/immutable/chunks/BDB-UTMg.js">
-		<link rel="modulepreload" href="../../_app/immutable/chunks/BpIe4ypo.js">
-		<link rel="modulepreload" href="../../_app/immutable/chunks/BqmEbPW-.js">
-		<link rel="modulepreload" href="../../_app/immutable/chunks/C1QkbIq4.js">
-		<link rel="modulepreload" href="../../_app/immutable/nodes/0.CfDcM2dp.js">
-		<link rel="modulepreload" href="../../_app/immutable/chunks/Bc9HElRY.js">
-		<link rel="modulepreload" href="../../_app/immutable/nodes/2.Cc1oYbgL.js">
-		<link rel="modulepreload" href="../../_app/immutable/nodes/14.CZM_e_NA.js">
-		<link rel="modulepreload" href="../../_app/immutable/chunks/LobeWfma.js">
-		<link rel="modulepreload" href="../../_app/immutable/chunks/DNLIZ9P_.js">
-		<link rel="modulepreload" href="../../_app/immutable/chunks/BLGf3txL.js">
-		<link rel="modulepreload" href="../../_app/immutable/chunks/BIRDNsLY.js">
+		<link rel="modulepreload" href="../../_app/immutable/entry/start.C8Hfn-7E.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/D8bUsv70.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/CqCFNNry.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/BxwGl9b3.js">
+		<link rel="modulepreload" href="../../_app/immutable/entry/app.DIgCM-Qt.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/Bk6bMzPL.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/Dk3_Ia6N.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/CFoez_C8.js">
+		<link rel="modulepreload" href="../../_app/immutable/nodes/0.Da3ngiaC.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/X2T2SbMG.js">
+		<link rel="modulepreload" href="../../_app/immutable/nodes/2.C7bBGhdT.js">
+		<link rel="modulepreload" href="../../_app/immutable/nodes/14.Be_yusyu.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/DOM-W21e.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/C2epRG69.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/Bqvyv2h5.js">
   </head>
   <body data-sveltekit-preload-data="hover">
-    <div style="display: contents"><!--[--><!--[--><!----><!--[--><!----><!----><main class="xl:mx-80 lg:mx-32 md:mx-16 mx-8"><nav class="sticky top-0 z-50 mb-18"><div><div class="hidden sm:flex w-full justify-evenly border-b-2 navigation-bar svelte-1tl8l7r"><div class="nav-clickable p-4 text-2xl font-extrabold svelte-1tl8l7r"><a href="/">home</a></div> <div class="nav-clickable p-4 text-2xl font-extrabold svelte-1tl8l7r"><a href="/portfolio">portfolio</a></div> <div class="nav-clickable p-4 text-2xl font-extrabold svelte-1tl8l7r"><a href="/#contact">contact</a></div></div> <div class="sm:hidden flex justify-end mt-4 sticky top-4"><!--[--><button id="burger" class="text-3xl font-extrabold m-2"><img src="/_app/immutable/assets/cglogo.Cy7EYN4z.png" class="w-16" alt="☰"></button><!--]--></div></div></nav><!----> <main class="portfolio"><h1>Widiscover</h1> <h2>Description</h2> <p>Widiscover is a LLM-powered full stack solution for answering questions from
-    articles on Wikipedia.</p> <h2>Characteristics</h2> <p>The solution uses two LLMs: one for the retrieval part of searching for the
-    relevant documents and another for extracting the answer. It is designed to
-    be fast and efficient and also to run on machines without the need of any
-    GPU.</p> <h3>See the code below</h3> <section class="my-6"><div class="flex justify-between font-bold bg-[rgb(151,151,185)] border-2 px-2 py-1 pe-1 border-white rounded-t-md"><h2 class="svelte-1rk07ky">Python</h2> <button class="text-xs clickable px-3 border-2 rounded-md">copy</button></div> <div class="text-sm overflow-x-auto bg-[rgb(221,221,250)] border-2 border-t-0 p-2 border-white rounded-b-md"><code><pre class="whitespace-pre text-blue-950"><!----><!---->### version = 2.3
-
-import re
-import requests
-from bs4 import BeautifulSoup
-from sentence_transformers import SentenceTransformer
-from transformers import AutoTokenizer, AutoModelForQuestionAnswering
-import torch
-
-
-def extract_keywords(text: str):
-    '''
-    Extracts a list of words from a given string excluding stopwords.
-    '''
-
-    keywords = text.strip('.?,').split(' ')
-    # remove stopwords
-    with open('english', 'r') as fr:
-        stopwords = fr.read().splitlines()
-    keywords = [keyword for keyword in keywords if keyword not in stopwords]
-    
-    return keywords
-
-
-def extract_text(url):
-    '''
-    Extracts a list of non-empty paragraphs from a given URL.
-    '''
-
-    doc = wikiscrap(url, 'p')
-    doc = [re.sub(r'<!---->\<!---->n|<!---->\<!---->[<!---->\<!---->d+<!---->\<!---->]','', para) for para in doc] # clean text from [X] or <!---->\<!---->n
-    doc = [para for para in doc if para] # removes empty elements
-    return doc
-
-
-def wikisearch(search_keywords, result_number_per_page = 3, language_code='en'):
-    '''
-    Searches over the wikipedia API for topics related to the keywords and returns the results in URL form.
-    '''
-
-    if type(search_keywords) == list:
-        search_keywords = ' '.join(search_keywords)
-
-    base_url = 'https://api.wikimedia.org/core/v1/wikipedia/'
-    endpoint = '/search/page'
-    url = base_url + language_code + endpoint
-
-    parameters = {'q': search_keywords, 'limit': result_number_per_page}
-
-    headers = {"User_Agent": "any"}
-
-    response = requests.get(url, headers=headers, params=parameters)
-
-    article_urls = []
-
-    for page in response.json()['pages']:
-        if page['description'] != 'Topics referred to by the same term':
-            article_urls.append('https://en.wikipedia.org/wiki/' + page['key'])
-
-    return article_urls
-
-
-def wikiscrap(url, element):
-    '''
-    Extracts the text of the paragraphs of a URL.
-    '''
-
-    response = requests.get(url)
-    if not response.ok:
-        print(response.status_code)
-        return
-
-    scraper = BeautifulSoup(response.text, 'html.parser')
-    paragraphs = scraper.find_all(element)
-
-    return [paragraph.get_text() for paragraph in paragraphs]
-
-
-def get_similarity(text1,text2):
-    '''
-    Calculates the similarity of two sentences through embeddings.
-    '''
-
-    global sim_model
-
-    emb1 = sim_model.encode(text1,normalize_embeddings=True)
-    emb2 = sim_model.encode(text2,normalize_embeddings=True)
-
-    return emb1 @ emb2.T
-
-
-def answer_query(query: str, content='', num_search_docs=1,
-                qa_threshold = 0.90, sim_threshold = 0.65):
-    '''
-    Generates an answer regarding the given query. 
-    Returns a dictionary with keys: answer, confidence score and source of the answer.
-    '''
-    
-    global qa_model
-    global qa_tokenizer
-
-    keywords = extract_keywords(query)
-    urls = wikisearch(keywords)
-
-    # extract text from the paragraphs
-    docs = [wikiscrap(url, 'p') for url in urls]
-    docs = [[x for x in doc if x.strip()] for doc in docs]
-
-    # get one list for all paragraphs
-    flat_docs = [re.sub(r'<!---->\<!---->[.*?<!---->\<!---->]', '', x) for doc in docs for x in doc]
-
-    # get one list for the index of the url
-    url_idx = [idx for idx, doc in enumerate(docs) for _ in doc]
-
-    # create a generator expression to extract relevant documents
-    gen_similar = ((get_similarity(query,x),idx) for idx, x in enumerate(flat_docs))
-
-    top_qa_score = 0.2
-    top_idx = None
-    results = None
-
-    while True:
-        try:
-            sim_score, idx = next(gen_similar)
-            if sim_score &lt; sim_threshold:
-                continue
-            inputs = qa_tokenizer(query, flat_docs[idx], return_tensors='pt')
-            outputs = qa_model(**inputs)
-            with torch.no_grad():
-                st = torch.nn.functional.softmax(outputs.start_logits, dim=1)
-                end = torch.nn.functional.softmax(outputs.end_logits, dim=1)
-                start_scores, start_idx = torch.max(st[0], dim=0)
-                end_scores, end_idx = torch.max(end[0], dim=0)
-                confidence = torch.sqrt(start_scores * end_scores).item()
-            if start_idx != end_idx:
-                if confidence > top_qa_score:
-                    top_qa_score = confidence
-                    top_idx = idx
-                    results = inputs.input_ids[0][start_idx:end_idx+1]
-                if confidence > qa_threshold:
-                    break
-        except:
-            break
-        
-    if results == None:
-        return {'answer':'Sorry, I couldn<!---->\<!---->'t find anything on Wikipedia<!---->\<!---->'s articles relevalt to the query.',
-            'score':0.0,}
-    top_answer = qa_tokenizer.decode(results, skip_special_tokens=True)
-    return {'answer':top_answer,
-            'score':top_qa_score,
-            'source':urls[url_idx[top_idx]]
-            }
-    
-
-
-def load_models(sim_model_str, qa_model_str):
-    '''
-    Loads the model and stores then to global variables. Returns None
-    '''
-
-    global sim_model
-    global qa_model
-    global qa_tokenizer
-
-    sim_model = SentenceTransformer(sim_model_str)
-    qa_model = AutoModelForQuestionAnswering.from_pretrained(qa_model_str)
-    qa_tokenizer = AutoTokenizer.from_pretrained(qa_model_str)
-
-
-
-def extract_topic(text):
-
-    match = re.search(r'<!---->\<!---->[(.*?)<!---->\<!---->]', text)
-    if match:
-        return match.group(1)
-    else:
-        return None
-
-
-def main():
-    '''
-    This is the CLI version of the app.
-
-    '''
-
-    global sim_model
-    global qa_model
-    global qa_tokenizer
-    
-    print('Widiscover v2.3 (CLI version)')
-    print('Please wait while the models are loading...<!---->\<!---->n')
-    load_models('sentence-transformers/all-roberta-large-v1', 'deepset/roberta-large-squad2')
-    print('Ask me anything...<!---->\<!---->n')
-
-    while True:
-        query = input('Question: ')
-        if query == 'exit' or query == 'quit':
-            print('Bye!')
-            break
-        if query == '' or query == 'help':
-            print('commands: exit / quit, help')
-            continue
-        
-        data = answer_query(query, extract_topic(query))
-
-        print('Answer: {}<!---->\<!---->nComfidence: {}<!---->\<!---->nSource: {}'.format(data['answer'], data['score'], data['source']))
-        print()
-    pass
-
-
-if __name__ == "__main__":
-    main()<!---->
-</pre></code></div></section><!----> <h2>Back-end implementation</h2> <p>Below is the back-end solution where the user can interact with the server and the LLMs consequently:</p> <section class="my-6"><div class="flex justify-between font-bold bg-[rgb(151,151,185)] border-2 px-2 py-1 pe-1 border-white rounded-t-md"><h2 class="svelte-1rk07ky">Python</h2> <button class="text-xs clickable px-3 border-2 rounded-md">copy</button></div> <div class="text-sm overflow-x-auto bg-[rgb(221,221,250)] border-2 border-t-0 p-2 border-white rounded-b-md"><code><pre class="whitespace-pre text-blue-950"><!----><!---->import threading
-import wicore23
-from flask import Flask, jsonify, render_template, request, url_for, redirect
-
-
-app = Flask(__name__)
-backend_loaded = False
-
-sim_model = None
-qa_model = None
-qa_tokenizer = None
-
-def load_backend():
-    global backend_loaded
-
-    print("backend loaded : {}".format(backend_loaded))
-    wicore23.load_models('sentence-transformers/all-mpnet-base-v2', 'deepset/roberta-large-squad2')
-    backend_loaded = True
-    print("backend loaded : {}".format(backend_loaded))
-
-
-def make_rag():
-
-    data = request.get_json()
-    if not data:
-        return jsonify({"answer": "Invalid request data"}), 400
-
-    query = data.get('query', '')
-    if not query:
-        return jsonify({"answer": "No query provided"}), 400
-
-    try:
-        response = wicore23.answer_query(query)
-        return response
-    except Exception as e:
-        print(f"Error processing query: {e}")
-        return jsonify({"answer": "An error occurred while processing the query"}), 500
-
-
-@app.route('/', methods=['GET', 'POST'])
-def index():
-
-    if request.method == 'POST':
-        return make_rag()
-    
-    return render_template('index.html')
-
-
-if __name__ == '__main__':
-
-    # Start the backend thread when the module loads
-    loading_thread = threading.Thread(target=load_backend)
-    loading_thread.start()
-    host = 'localhost' # '0.0.0.0'
-    port = '7454'
-    uri = "{}:{}".format(host,port)
-    print("listening on " + uri)
-    app.run(host=host, port=port, debug=True, use_reloader=False)<!---->
-</pre></code></div></section><!----></main><!----></main><!----><!----><!----><!--]--><!----><!----><!--]--> <!--[!--><!--]--><!--]-->
+    <div style="display: contents"><!--[--><!--[--><!----><!--[--><!----><!----><div class="justify-center flex items-center h-screen"><img src="/_app/immutable/assets/coming_soon.DncYlQfi.jpeg" alt="Coming Soon" class="w-96 h-auto my-0"></div><!----><!----><!----><!--]--><!----><!----><!--]--> <!--[!--><!--]--><!--]-->
 			
 			<script>
 				{
-					__sveltekit_1alrohd = {
+					__sveltekit_146fek6 = {
 						base: new URL("../..", location).pathname.slice(0, -1)
 					};
 
 					const element = document.currentScript.parentElement;
 
 					Promise.all([
-						import("../../_app/immutable/entry/start.C4ECRrRN.js"),
-						import("../../_app/immutable/entry/app.ByRfXRqT.js")
+						import("../../_app/immutable/entry/start.C8Hfn-7E.js"),
+						import("../../_app/immutable/entry/app.DIgCM-Qt.js")
 					]).then(([kit, app]) => {
 						kit.start(app, element, {
 							node_ids: [0, 2, 14],
