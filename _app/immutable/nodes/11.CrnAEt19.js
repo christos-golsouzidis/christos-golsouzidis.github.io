@@ -1,0 +1,248 @@
+import{t as _,a as y}from"../chunks/DdLVzA7k.js";import"../chunks/D2xVqN_Y.js";import{A as s,B as b,y as a,z as n,n as v}from"../chunks/Bbw9Kdul.js";import{e as x,i as q,C as I}from"../chunks/B5CwaeZi.js";import{h as p,I as T}from"../chunks/DEy91EUW.js";/* empty css                */var A=_(`<h2>Description</h2> <p>Infrang is a Python class designed to provide methods on retrieving and generating information. It is particularly useful for RAG-based (Retrieval Augmented Generation) applications, or in other words, to combine searching for information with generating responses based on that information.
+With Infrang, you can build a knowledge base that not only retrieves relevant information but also generates insightful answers, making it a powerful tool for developers and researchers alike.</p> <h2>Features</h2> <ul><li><strong>Multiple Interfaces</strong>: Infrang offers both a Command-Line Interface (CLI) and a REST API, making it easy for users to interact with the system in a way that suits their preferences.</li> <li><strong>Modular Design</strong>: Infrang is built with a modular architecture, allowing easy extension and customization of its components.</li> <li><strong>Hybrid Search</strong>: The class supports Reciprocal Rank Fusion (RRF) combining dense and sparse embedding models, enabling the power of hybrid search.</li> <li><strong>Text Preprocessing</strong>: Infrang includes automated text preprocessing capabilities, including extraction and chunking.</li> <li><strong>Multiple sources support</strong>: A great variety of sources can be used for the retrieval part, such as PDF files, text files (<code>csv</code>, <code>json</code>, <code>md</code>, <code>txt</code> and <code>xml</code>), office files (<code>docx</code>, <code>xlsx</code> and <code>pptx</code>) and links (<code>url</code> and <code>urls</code>).</li> <li><strong>Self-Contained Vector Database</strong>: Infrang includes a fully managed, local embedded <a href="https://qdrant.tech/" rel="nofollow">QDrant</a> vector database. This means no complex setup with Docker or external servers—everything works out-of-the-box. All data is stored persistently in a local <code>./data</code> directory.</li> <li><strong>Query rewriting</strong>: The class has additional text processing capabilities such as word spelling control, paraphrasing or text expansion.</li> <li><strong>Answer Generation</strong>: Infrang generates answers based on the retrieved context, using <a href="https://console.groq.com/home" rel="nofollow">Groq API</a>.</li></ul> <h2>Architecture</h2> <ul><li><strong>Document Processing</strong>: The user provides a folder of documents. Infrang automatically extracts text from them and splits it into smaller chunks.</li> <li><strong>Vectorization</strong>: Each chunk is converted into numerical vectors (embeddings) using the configured dense and sparse models.</li> <li><strong>Storage</strong>: These vectors are stored and indexed in a local, self-managed Qdrant database, ready for fast retrieval.</li> <li><strong>Querying</strong>: When the user asks a question, it is also vectorized. Qdrant performs a hybrid search to find the most relevant text chunks.</li> <li><strong>Answer Generation</strong>: These relevant chunks are sent to a powerful Groq-hosted LLM (like Llama 3), which generates a sourced answer from.</li></ul> <h2>Models</h2> <p>Infrang supports various models for different tasks:</p> <ul><li><strong>Dense Model</strong>: The model used for semantic search. Default is <code>BAAI/bge-small-en-v1.5</code>.</li> <li><strong>Sparse Model</strong>: The model used for lexical search. Default is <code>prithivida/Splade_PP_en_v1</code>.</li> <li><strong>Paraphrase Model</strong>: The model used for query rewriting. Default is <code>ramsrigouthamg/t5_paraphraser</code>.</li> <li><strong>Generative Model</strong>: The model used for the text generation. Default is <code>llama-3.3-70b-versatile</code>.</li></ul> <h2>The core library</h2> <p>Here is a part with the initialization of the class:</p> <pre class="language-python"><!></pre> <p>To use the class, an <code>Infrang</code> object must be firstly created like this:</p> <pre class="language-python"><!></pre> <p>The collection is the path to the knowledge base, where the extraction of the information happens.<br> Now <code>infrang</code> is an instanse of the <code>Infrang</code> class. Thus, to execute the CRUD operations, the following methods can be used:</p> <ul><li><code>infrang.create(kb_path)</code>: To create a new collection from the documents found in <code>kb_path</code>:</li></ul> <pre class="language-python"><!></pre> <ul><li><code>infrang.update(kb_path)</code>: To update an existing collection with new documents found in <code>kb_path</code>:</li></ul> <pre class="language-python"><!></pre> <ul><li><code>infrang.delete()</code>: To delete an existing collection:</li></ul> <pre class="language-python"><!></pre> <ul><li><code>infrang.answer(question)</code>: To get an answer to a question based on the information stored in the collection:</li></ul> <pre class="language-python"><!></pre>`,1);function P(g){var r=A(),e=s(b(r),22),m=a(e);p(m,()=>`<code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Infrang</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">'''
+        INFormation Retrieval and ANswer Generation: A class to be used by RAG applications.
+
+        Methods:
+            __init__
+            get_sources
+            create
+            update
+            delete
+            answer
+    '''</span>
+
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>
+                collection<span class="token punctuation">,</span>
+                dense_model_name<span class="token operator">=</span><span class="token string">'BAAI/bge-small-en-v1.5'</span><span class="token punctuation">,</span>
+                sparse_model_name<span class="token operator">=</span><span class="token string">'prithivida/Splade_PP_en_v1'</span><span class="token punctuation">,</span>
+                paraphrase_model_name<span class="token operator">=</span><span class="token string">'ramsrigouthamg/t5_paraphraser'</span><span class="token punctuation">,</span>
+                generate_model_name<span class="token operator">=</span><span class="token string">'llama-3.3-70b-versatile'</span><span class="token punctuation">,</span>
+                parallel<span class="token operator">=</span><span class="token number">4</span><span class="token punctuation">,</span>
+                groq_api_key<span class="token operator">=</span><span class="token boolean">None</span><span class="token punctuation">,</span>
+                <span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token triple-quoted-string string">'''
+        Initializes the Infrang instance with the specified document path and model configurations.
+            Params: 
+                **collection (str):** Name of the collection.
+                **sparse_model_name (str):** Name of the sparse embedding model.
+                **dense_model_name (str):** Name of the dense embedding model.
+                **paraphrase_model_name (str):** Name of the paraphrasing model.
+                **generate_model_name (str):** Name of the generating model that is used by Groq.
+                **parallel (int):** Number of parallel processes for database operations. Default value is 4.
+                **groq_api_key (str):** API key for Groq service. If not provided, it uses GROQ_API_KEY stored in the virtual environment.
+        '''</span>
+        
+        self<span class="token punctuation">.</span>DESTINATION_SOURCES <span class="token operator">=</span> <span class="token string">'__sources.list'</span>
+        self<span class="token punctuation">.</span>collection <span class="token operator">=</span> collection <span class="token keyword">or</span> <span class="token string">'default_collection'</span>
+        self<span class="token punctuation">.</span>dense_model_name <span class="token operator">=</span> dense_model_name
+        self<span class="token punctuation">.</span>sparse_model_name <span class="token operator">=</span> sparse_model_name
+        self<span class="token punctuation">.</span>parallel <span class="token operator">=</span> parallel
+        self<span class="token punctuation">.</span>database_client <span class="token operator">=</span> <span class="token boolean">None</span>
+        self<span class="token punctuation">.</span>__setup_init<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>paraphrase_tokenizer <span class="token operator">=</span> <span class="token boolean">None</span>
+        self<span class="token punctuation">.</span>paraphrase_model <span class="token operator">=</span> <span class="token boolean">None</span>
+        <span class="token keyword">if</span> paraphrase_model_name<span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>paraphrase_tokenizer <span class="token operator">=</span> T5Tokenizer<span class="token punctuation">.</span>from_pretrained<span class="token punctuation">(</span>paraphrase_model_name<span class="token punctuation">,</span> legacy<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span>
+            self<span class="token punctuation">.</span>paraphrase_model <span class="token operator">=</span> T5ForConditionalGeneration<span class="token punctuation">.</span>from_pretrained<span class="token punctuation">(</span>paraphrase_model_name<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>generate_model <span class="token operator">=</span> generate_model_name
+        <span class="token keyword">if</span> groq_api_key<span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>groq <span class="token operator">=</span> Groq<span class="token punctuation">(</span>
+                    api_key<span class="token operator">=</span>groq_api_key
+                <span class="token punctuation">)</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>groq <span class="token operator">=</span> Groq<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+
+    <span class="token keyword">def</span> <span class="token function">__setup_init</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> <span class="token keyword">not</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>exists<span class="token punctuation">(</span><span class="token string">'data'</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            os<span class="token punctuation">.</span>makedirs<span class="token punctuation">(</span><span class="token string">'data'</span><span class="token punctuation">)</span>
+            time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">0.05</span><span class="token punctuation">)</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>database_client <span class="token operator">=</span> QdrantClient<span class="token punctuation">(</span>path<span class="token operator">=</span><span class="token string">'data'</span><span class="token punctuation">)</span>
+        <span class="token keyword">except</span><span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'Closing existing database instanse...'</span><span class="token punctuation">)</span>
+            self<span class="token punctuation">.</span>database_client<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">0.1</span><span class="token punctuation">)</span>
+            self<span class="token punctuation">.</span>database_client <span class="token operator">=</span> QdrantClient<span class="token punctuation">(</span>path<span class="token operator">=</span><span class="token string">'data'</span><span class="token punctuation">)</span>
+</code>`),n(e);var o=s(e,4),h=a(o);p(h,()=>'<code class="language-python">infrang <span class="token operator">=</span> Infrang<span class="token punctuation">(</span>collection<span class="token operator">=</span>collection<span class="token punctuation">)</span></code>'),n(o);var c=s(o,6),l=a(c);p(l,()=>`<code class="language-python"><span class="token keyword">def</span> <span class="token function">create</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> kb_path<span class="token punctuation">,</span> overwrite<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">'''
+        Creates a new Qdrant collection for storing document embeddings if it does not already exist.
+            Params:
+                **kb_path**: Path to the knowledge base
+                **overwrite (bool):** If true, it replaces the sources that already exist with the new. Default value is False.
+    '''</span>
+
+    kb_dir<span class="token punctuation">,</span> _<span class="token punctuation">,</span> files <span class="token operator">=</span> <span class="token builtin">next</span><span class="token punctuation">(</span>os<span class="token punctuation">.</span>walk<span class="token punctuation">(</span>kb_path<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment"># the directory of the knowledge base</span>
+    base_path <span class="token operator">=</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token string">'data'</span><span class="token punctuation">,</span> <span class="token string">'collection'</span><span class="token punctuation">,</span> self<span class="token punctuation">.</span>collection<span class="token punctuation">,</span> self<span class="token punctuation">.</span>DESTINATION_SOURCES<span class="token punctuation">)</span>
+    base_dir <span class="token operator">=</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token string">'data'</span><span class="token punctuation">,</span> <span class="token string">'collection'</span><span class="token punctuation">,</span> self<span class="token punctuation">.</span>collection<span class="token punctuation">)</span>
+    current_docs <span class="token operator">=</span> self<span class="token punctuation">.</span>__get_current_sources<span class="token punctuation">(</span>kb_dir<span class="token punctuation">,</span> files<span class="token punctuation">)</span>
+
+    <span class="token keyword">if</span> <span class="token keyword">not</span> overwrite<span class="token punctuation">:</span>
+        <span class="token keyword">if</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>exists<span class="token punctuation">(</span>base_path<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'The database exists already.'</span><span class="token punctuation">)</span>
+            <span class="token keyword">return</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>database_client<span class="token punctuation">.</span>delete_collection<span class="token punctuation">(</span>collection_name<span class="token operator">=</span>self<span class="token punctuation">.</span>collection<span class="token punctuation">)</span>
+        time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">0.1</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'Creating database...'</span><span class="token punctuation">)</span>
+    os<span class="token punctuation">.</span>makedirs<span class="token punctuation">(</span>base_dir<span class="token punctuation">)</span>
+    <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>base_path<span class="token punctuation">,</span> <span class="token string">'x'</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">pass</span>
+    self<span class="token punctuation">.</span>database_client<span class="token punctuation">.</span>create_collection<span class="token punctuation">(</span>
+        collection_name<span class="token operator">=</span>self<span class="token punctuation">.</span>collection<span class="token punctuation">,</span>
+        vectors_config<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token string">'dense'</span><span class="token punctuation">:</span> models<span class="token punctuation">.</span>VectorParams<span class="token punctuation">(</span>
+                size<span class="token operator">=</span>self<span class="token punctuation">.</span>database_client<span class="token punctuation">.</span>get_embedding_size<span class="token punctuation">(</span>self<span class="token punctuation">.</span>dense_model_name<span class="token punctuation">)</span><span class="token punctuation">,</span> 
+                distance<span class="token operator">=</span>models<span class="token punctuation">.</span>Distance<span class="token punctuation">.</span>COSINE
+            <span class="token punctuation">)</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        sparse_vectors_config<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token string">'sparse'</span><span class="token punctuation">:</span> models<span class="token punctuation">.</span>SparseVectorParams<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">)</span>
+    
+    <span class="token keyword">for</span> doc <span class="token keyword">in</span> current_docs<span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>__etl<span class="token punctuation">(</span>kb_dir<span class="token punctuation">,</span> doc<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>__update_existing_sources<span class="token punctuation">(</span>doc<span class="token punctuation">)</span>
+
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'Done!'</span><span class="token punctuation">)</span></code>`),n(c);var t=s(c,4),k=a(t);p(k,()=>`<code class="language-python">
+<span class="token keyword">def</span> <span class="token function">update</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> kb_path<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">'''
+        Updates the database given the knowledge base.
+            Params:
+                **kb_path**: Path to the knowledge base
+    '''</span>
+
+    kb_dir<span class="token punctuation">,</span> _<span class="token punctuation">,</span> files <span class="token operator">=</span> <span class="token builtin">next</span><span class="token punctuation">(</span>os<span class="token punctuation">.</span>walk<span class="token punctuation">(</span>kb_path<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment"># the directory of the knowledge base</span>
+
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        new_docs <span class="token operator">=</span> self<span class="token punctuation">.</span>__get_current_sources<span class="token punctuation">(</span>kb_dir<span class="token punctuation">,</span> files<span class="token punctuation">)</span> <span class="token operator">-</span> self<span class="token punctuation">.</span>__get_existing_sources<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">except</span> FileNotFoundError <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'Creating a new collection...'</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>create<span class="token punctuation">(</span>kb_path<span class="token operator">=</span>kb_dir<span class="token punctuation">,</span> overwrite<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span>
+
+    <span class="token keyword">if</span> <span class="token keyword">not</span> new_docs<span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>
+            <span class="token string">'Warning: There are no new documents to update.'</span>
+        <span class="token punctuation">)</span>
+        <span class="token keyword">return</span>
+
+    <span class="token keyword">for</span> doc <span class="token keyword">in</span> new_docs<span class="token punctuation">:</span>
+        <span class="token keyword">if</span> <span class="token keyword">not</span> self<span class="token punctuation">.</span>__etl<span class="token punctuation">(</span>kb_dir<span class="token punctuation">,</span> doc<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">continue</span>
+        self<span class="token punctuation">.</span>__update_existing_sources<span class="token punctuation">(</span>doc<span class="token punctuation">)</span>
+
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'Done!'</span><span class="token punctuation">)</span></code>`),n(t);var u=s(t,4),d=a(u);p(d,()=>`<code class="language-python">
+    <span class="token keyword">def</span> <span class="token function">delete</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token triple-quoted-string string">'''
+            Deletes the collection
+        '''</span>
+        _<span class="token punctuation">,</span> collections<span class="token punctuation">,</span> _ <span class="token operator">=</span> <span class="token builtin">next</span><span class="token punctuation">(</span>os<span class="token punctuation">.</span>walk<span class="token punctuation">(</span>os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token string">'data'</span><span class="token punctuation">,</span><span class="token string">'collection'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> self<span class="token punctuation">.</span>collection <span class="token keyword">in</span> collections<span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>database_client<span class="token punctuation">.</span>delete_collection<span class="token punctuation">(</span>collection_name<span class="token operator">=</span>self<span class="token punctuation">.</span>collection<span class="token punctuation">)</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'Collection removed successfully.'</span><span class="token punctuation">)</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'Error: Could not find the collection to remove it.'</span><span class="token punctuation">)</span></code>`),n(u);var i=s(u,4),f=a(i);p(f,()=>`<code class="language-python">
+<span class="token keyword">def</span> <span class="token function">answer</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> query<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">,</span> debug<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">'''
+    Performs a semantic search over the stored documents using dense and sparse models
+    and generates an answer based on the retrieved context.
+        Params:
+            **query (str):** The query string to search for in the database.
+        Returns:
+            A dictionary containing the generated answer and usage statistics.
+    '''</span>
+
+    <span class="token keyword">def</span> <span class="token function">search</span><span class="token punctuation">(</span>query<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">,</span> limit<span class="token operator">=</span><span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">assert</span> <span class="token builtin">type</span><span class="token punctuation">(</span>query<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token builtin">str</span>
+        search_result <span class="token operator">=</span> self<span class="token punctuation">.</span>database_client<span class="token punctuation">.</span>query_points<span class="token punctuation">(</span>
+            collection_name<span class="token operator">=</span>self<span class="token punctuation">.</span>collection<span class="token punctuation">,</span>
+            query<span class="token operator">=</span>models<span class="token punctuation">.</span>FusionQuery<span class="token punctuation">(</span>
+                fusion<span class="token operator">=</span>models<span class="token punctuation">.</span>Fusion<span class="token punctuation">.</span>RRF
+            <span class="token punctuation">)</span><span class="token punctuation">,</span>
+            prefetch<span class="token operator">=</span><span class="token punctuation">[</span>
+                models<span class="token punctuation">.</span>Prefetch<span class="token punctuation">(</span>
+                    query<span class="token operator">=</span>models<span class="token punctuation">.</span>Document<span class="token punctuation">(</span>text<span class="token operator">=</span>query<span class="token punctuation">,</span> model<span class="token operator">=</span>self<span class="token punctuation">.</span>dense_model_name<span class="token punctuation">)</span><span class="token punctuation">,</span>
+                    using<span class="token operator">=</span><span class="token string">'dense'</span><span class="token punctuation">,</span>
+                <span class="token punctuation">)</span><span class="token punctuation">,</span>
+                models<span class="token punctuation">.</span>Prefetch<span class="token punctuation">(</span>
+                    query<span class="token operator">=</span>models<span class="token punctuation">.</span>Document<span class="token punctuation">(</span>text<span class="token operator">=</span>query<span class="token punctuation">,</span> model<span class="token operator">=</span>self<span class="token punctuation">.</span>sparse_model_name<span class="token punctuation">)</span><span class="token punctuation">,</span>
+                    using<span class="token operator">=</span><span class="token string">'sparse'</span><span class="token punctuation">,</span>
+                <span class="token punctuation">)</span><span class="token punctuation">,</span>
+            <span class="token punctuation">]</span><span class="token punctuation">,</span>
+            query_filter<span class="token operator">=</span><span class="token boolean">None</span><span class="token punctuation">,</span>
+            limit<span class="token operator">=</span>limit<span class="token punctuation">,</span>
+        <span class="token punctuation">)</span>
+        <span class="token keyword">return</span> <span class="token punctuation">[</span><span class="token punctuation">&#123;</span>
+            <span class="token string">'metadata'</span><span class="token punctuation">:</span> result<span class="token punctuation">.</span>payload<span class="token punctuation">,</span>
+            <span class="token string">'score'</span><span class="token punctuation">:</span> result<span class="token punctuation">.</span>score<span class="token punctuation">,</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">for</span> result <span class="token keyword">in</span> search_result<span class="token punctuation">.</span>points<span class="token punctuation">]</span>
+
+    <span class="token keyword">def</span> <span class="token function">get_response</span><span class="token punctuation">(</span>query<span class="token punctuation">,</span> num_responses<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> max_length<span class="token operator">=</span><span class="token number">64</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        batch <span class="token operator">=</span> self<span class="token punctuation">.</span>paraphrase_tokenizer<span class="token punctuation">.</span>encode_plus<span class="token punctuation">(</span>query<span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> return_tensors<span class="token operator">=</span><span class="token string">"pt"</span><span class="token punctuation">)</span>
+        <span class="token keyword">with</span> torch<span class="token punctuation">.</span>no_grad<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            translated <span class="token operator">=</span> self<span class="token punctuation">.</span>paraphrase_model<span class="token punctuation">.</span>generate<span class="token punctuation">(</span><span class="token operator">**</span>batch<span class="token punctuation">,</span>
+                max_length<span class="token operator">=</span>max_length<span class="token punctuation">,</span>
+                num_beams <span class="token operator">=</span> num_responses<span class="token punctuation">,</span>
+                num_return_sequences<span class="token operator">=</span>num_responses<span class="token punctuation">)</span>
+            <span class="token keyword">return</span> self<span class="token punctuation">.</span>paraphrase_tokenizer<span class="token punctuation">.</span>batch_decode<span class="token punctuation">(</span>translated<span class="token punctuation">,</span> skip_special_tokens<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">def</span> <span class="token function">check_spelling</span><span class="token punctuation">(</span>query<span class="token punctuation">,</span> distance<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        spell <span class="token operator">=</span> SpellChecker<span class="token punctuation">(</span>distance<span class="token operator">=</span>distance<span class="token punctuation">)</span>
+        words <span class="token operator">=</span> query<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token comment"># If a word contains at least one upper case character or is inside quotes ignore correction for this word</span>
+        corrected_words <span class="token operator">=</span> <span class="token punctuation">[</span>spell<span class="token punctuation">.</span>correction<span class="token punctuation">(</span>word<span class="token punctuation">)</span> <span class="token keyword">or</span> word 
+                        <span class="token keyword">if</span> <span class="token punctuation">(</span>word<span class="token punctuation">.</span>islower<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">or</span> word<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">"'"</span> <span class="token keyword">or</span> word<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">'"'</span><span class="token punctuation">)</span> <span class="token keyword">else</span> word 
+                        <span class="token keyword">for</span> word <span class="token keyword">in</span> words<span class="token punctuation">]</span>
+        <span class="token keyword">return</span> <span class="token string">" "</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>corrected_words<span class="token punctuation">)</span>
+        
+    <span class="token keyword">def</span> <span class="token function">generate</span><span class="token punctuation">(</span>query<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">,</span> context<span class="token punctuation">:</span> <span class="token builtin">list</span><span class="token punctuation">[</span><span class="token builtin">str</span><span class="token punctuation">]</span><span class="token punctuation">,</span> model<span class="token operator">=</span>self<span class="token punctuation">.</span>generate_model<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">assert</span> <span class="token builtin">type</span><span class="token punctuation">(</span>context<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token builtin">list</span>
+        system_prompt <span class="token operator">=</span> <span class="token triple-quoted-string string">'''
+You are an assistant that answers questions strictly based on the CONTEXTS below.
+Do not use external knowledge or guess. If the answer is missing, say: "I don't know the answer."
+Keep responses concise (1-2 sentences unless more detail is needed).
+'''</span>
+        system_prompt <span class="token operator">+=</span> <span class="token string">''</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'&#92;n&#92;n&lt;CONTEXT>&#92;n'</span> <span class="token operator">+</span> item <span class="token operator">+</span> <span class="token string">'&#92;n&lt;/CONTEXT>'</span> <span class="token keyword">for</span> item <span class="token keyword">in</span> context<span class="token punctuation">]</span><span class="token punctuation">)</span>
+        
+        response <span class="token operator">=</span> self<span class="token punctuation">.</span>groq<span class="token punctuation">.</span>chat<span class="token punctuation">.</span>completions<span class="token punctuation">.</span>create<span class="token punctuation">(</span>
+            messages<span class="token operator">=</span><span class="token punctuation">[</span>
+                    <span class="token punctuation">&#123;</span>
+                        <span class="token string">"role"</span><span class="token punctuation">:</span> <span class="token string">"system"</span><span class="token punctuation">,</span>
+                        <span class="token string">"content"</span><span class="token punctuation">:</span> system_prompt
+                    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+                    <span class="token punctuation">&#123;</span>
+                        <span class="token string">"role"</span><span class="token punctuation">:</span> <span class="token string">"user"</span><span class="token punctuation">,</span>
+                        <span class="token string">"content"</span><span class="token punctuation">:</span> query
+                    <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">]</span><span class="token punctuation">,</span>
+            model<span class="token operator">=</span>model<span class="token punctuation">,</span>
+        <span class="token punctuation">)</span>
+        <span class="token keyword">return</span> <span class="token punctuation">&#123;</span>
+            <span class="token string">'answer'</span> <span class="token punctuation">:</span> response<span class="token punctuation">.</span>choices<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>message<span class="token punctuation">.</span>content<span class="token punctuation">,</span>
+            <span class="token string">'usage'</span> <span class="token punctuation">:</span> <span class="token punctuation">&#123;</span>
+                <span class="token string">'completion_time'</span><span class="token punctuation">:</span> response<span class="token punctuation">.</span>usage<span class="token punctuation">.</span>completion_time<span class="token punctuation">,</span>
+                <span class="token string">'prompt_time'</span><span class="token punctuation">:</span> response<span class="token punctuation">.</span>usage<span class="token punctuation">.</span>prompt_time<span class="token punctuation">,</span>
+                <span class="token string">'total_time'</span><span class="token punctuation">:</span> response<span class="token punctuation">.</span>usage<span class="token punctuation">.</span>total_time<span class="token punctuation">,</span>
+
+                <span class="token string">'completion_tokens'</span><span class="token punctuation">:</span> response<span class="token punctuation">.</span>usage<span class="token punctuation">.</span>completion_tokens<span class="token punctuation">,</span>
+                <span class="token string">'prompt_tokens'</span><span class="token punctuation">:</span> response<span class="token punctuation">.</span>usage<span class="token punctuation">.</span>prompt_tokens<span class="token punctuation">,</span>
+                <span class="token string">'total_tokens'</span><span class="token punctuation">:</span> response<span class="token punctuation">.</span>usage<span class="token punctuation">.</span>total_tokens<span class="token punctuation">,</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+    
+    <span class="token keyword">if</span> <span class="token keyword">not</span> query<span class="token punctuation">:</span>
+        <span class="token keyword">return</span>
+    query <span class="token operator">=</span> check_spelling<span class="token punctuation">(</span>query<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> self<span class="token punctuation">.</span>paraphrase_model <span class="token keyword">and</span> self<span class="token punctuation">.</span>paraphrase_tokenizer<span class="token punctuation">:</span>
+        query <span class="token operator">=</span> get_response<span class="token punctuation">(</span>query<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+        <span class="token keyword">if</span> debug<span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'&lt;rewrite>&#92;n&#123;&#125;&#92;n&lt;/rewrite>&#92;n'</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>query<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    results <span class="token operator">=</span> search<span class="token punctuation">(</span>query<span class="token punctuation">,</span> limit<span class="token operator">=</span><span class="token number">4</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> debug<span class="token punctuation">:</span>
+        <span class="token keyword">for</span> num<span class="token punctuation">,</span> result <span class="token keyword">in</span> <span class="token builtin">enumerate</span><span class="token punctuation">(</span>results<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'&lt;&#123;&#125; result>&#92;n&#123;&#125;&#92;n&lt;/result>&#92;n'</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>num<span class="token punctuation">,</span> result<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    text_results <span class="token operator">=</span> <span class="token punctuation">[</span>item<span class="token punctuation">[</span><span class="token string">'metadata'</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'text'</span><span class="token punctuation">]</span> <span class="token keyword">for</span> item <span class="token keyword">in</span> results<span class="token punctuation">]</span>
+    <span class="token keyword">return</span> generate<span class="token punctuation">(</span>query<span class="token operator">=</span>query<span class="token punctuation">,</span> context<span class="token operator">=</span>text_results<span class="token punctuation">)</span>
+</code>`),n(i),y(g,r)}var D=_('<section><div class="portfolio"><!> <!></div> <div class="mt-8 mb-20"><div class="portfolio"><h2>See also</h2></div> <p>See some other relevant projects:</p> <div class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 my-8"></div></div></section>');function z(g){let r="Infrang",e="INFormation Retrieval and ANswer Generation",m="https://github.com/christos-golsouzidis/Infrang",o=["front end","back end","databases","LLMs","external API"],h=[["html","css"],["python","FastAPI"],["QDrant"],["BAAI/bge-small-en-v1.5","prithivida/Splade_PP_en_v1","ramsrigouthamg/t5_paraphraser","llama-3.3-70b-versatile (via Groq API)"],["Groq Cloud API"]],c=[{text:"Widiscover: A question answering application powered by LLMs",link:"widiscover"},{text:"Anti-captcha application",link:"anticaptcha"},{text:"Text recognition application",link:"textrecognition"}];var l=D(),t=a(l),k=a(t);T(k,{githubLink:m,name:r,subname:e,techList:h,titleList:o});var u=s(k,2);P(u),n(t);var d=s(t,2),i=s(a(d),4);x(i,5,()=>c,q,(f,w)=>{I(f,{get items(){return v(w)}})}),n(i),n(d),n(l),y(g,l)}export{z as component};

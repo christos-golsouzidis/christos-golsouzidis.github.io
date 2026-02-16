@@ -1,0 +1,351 @@
+import{t as _,a as C}from"../chunks/DdLVzA7k.js";import"../chunks/D2xVqN_Y.js";import{A as a,B as O,y as s,z as n,C as N,n as S}from"../chunks/Bbw9Kdul.js";import{e as L,i as K,C as F}from"../chunks/B5CwaeZi.js";import{h as t,I as B}from"../chunks/DEy91EUW.js";/* empty css                */var Y=_('<h2>Description</h2> <p>Widiscover is a knowledge retrieval and question-answering system that leverages Wikipedia content and Groq’s AI models to provide accurate, source-backed answers to user queries. The system combines web scraping, vector search, and large language models to create an intelligent information retrieval platform.</p> <h2>Features</h2> <ul><li><strong>AI-Powered Q&A</strong>: Generate answers from Wikipedia content using Groq’s LLMs</li> <li><strong>Dual-Vector Search</strong>: Combines dense and sparse embeddings for precise document retrieval</li> <li><strong>Configuration Management</strong>: Persistent settings storage with validation with adjustable parameters for chunking, search, and retrieval</li> <li><strong>Web Interface</strong>: Serves a Svelte-based responsive frontend with automatic browser launch</li> <li><strong>Error Handling</strong>: Comprehensive error handling for API calls and file operations</li> <li><strong>Environment Management</strong>: Secure API key storage in <code>.env</code> files</li></ul> <h2>Architecture</h2> <p><img src="/widiscover_architecture.png" alt="architecture"></p> <h2>API Endpoints</h2> <ul><li><code>GET /api/init</code> - Initialize application and check required files</li> <li><code>GET /api/main</code> - Validate configuration and load environment</li> <li><code>GET /api/config</code> - Retrieve current configuration</li> <li><code>POST /api/config</code> - Update configuration and API key</li> <li><code>GET /api/default</code> - Get default configuration values</li> <li><code>POST /api/query</code> - Submit queries and receive AI-generated answers</li></ul> <h2>Installation</h2> <h3>Prerequisites</h3> <ul><li>Python 3.8+</li> <li>Groq API key (get one at <a href="https://console.groq.com/keys" rel="nofollow">https://console.groq.com/keys</a>)</li></ul> <h3>Setup</h3> <ol><li>Clone the repository: <pre class="language-bash"><!></pre></li> <li>Install dependencies on a python virtual environment: <pre class="language-bash"><!></pre> or by using uv: <pre class="language-bash"><!></pre></li> <li>Ensure that the <code>widiscover_core</code> package is available in your Python environment.</li> <li>Build the frontend: <pre class="language-bash"><!></pre></li></ol> <h2>File Structure</h2> <p>After the installation the project should have the following structure:</p> <pre class="language-undefined"><!></pre> <h2>Configuration</h2> <h3>Environment Variables</h3> <p>You can optionally create an <code>.env</code> file in the root directory:</p> <pre class="language-env"><!></pre> <p>Alternatively you can skip this step as by running the application you will be redirected to the settings (<code>/config</code>) and by providing the API key the <code>.env</code> file will be created automatically.</p> <h2>Usage</h2> <h3>Starting the Server</h3> <p>Run the application directly:</p> <pre class="language-bash"><!></pre> <p>The server will:</p> <ol><li>Start on <code>http://127.0.0.1:7454</code></li> <li>Open your default web browser automatically</li> <li>Check for required configuration files</li> <li>Redirect to setup if configuration is missing, otherwise to the main page.</li></ol> <p>These endpoints are for serving the front end:</p> <pre class="language-python"><!></pre> <p>The data are validated through Pydantic, which is the default validation method with FastAPI:</p> <pre class="language-python"><!></pre> <p>When the <code>/</code> is loaded, the front end makes a <code>GET</code> call to <code>/api/init</code>:</p> <pre class="language-javascript"><!></pre> <p>The back end receives the <code>GET</code> request and returns a <code>json</code> string (unless an exception occurs):</p> <pre class="language-python"><!></pre> <p>If settings needs to be configured the back end sends info to the UI for redirection. The UI handles then the redirect. Here is the front end code to the <code>/config</code> page:</p> <pre class="language-svelte"><!></pre> <h3>Configuration Settings</h3> <p>The application uses a <code>config.json</code> file with the following adjustable parameters:</p> <table><thead><tr><th>Parameter</th><th>Description</th><th>Range</th><th>Default</th></tr></thead><tbody><tr><td><code>configResultNumberPerPage</code></td><td>Number of Wikipedia results per page</td><td>1-10</td><td>3</td></tr><tr><td><code>configChunkLength</code></td><td>Text chunk (character) length for processing</td><td>100-10000</td><td>1800</td></tr><tr><td><code>configChunkOverlap</code></td><td>Overlap between text chunks (characters)</td><td>0-2000</td><td>180</td></tr><tr><td><code>configTopKResults</code></td><td>Top K results to consider</td><td>1-16</td><td>4</td></tr><tr><td><code>configThreshold</code></td><td>Relevance threshold for filtering</td><td>0.0-0.75</td><td>0.3</td></tr><tr><td><code>configDistance</code></td><td>Spelling distance tolerance</td><td>0-2</td><td>1</td></tr><tr><td><code>configGenerativeModel</code></td><td>Groq model to use</td><td>See below</td><td><code>llama-3.3-70b-versatile</code></td></tr></tbody></table> <h3>Available Models</h3> <p>The <code>Groq API</code> supports the following models:</p> <ul><li><code>compound-beta</code></li> <li><code>compound-beta-mini</code></li> <li><code>gemma2-9b-it</code></li> <li><code>llama-3.1-8b-instant</code></li> <li><code>llama-3.3-70b-versatile</code></li> <li><code>meta-llama/llama-4-maverick-17b-128e-instruct</code></li> <li><code>meta-llama/llama-4-scout-17b-16e-instruct</code></li> <li><code>meta-llama/llama-guard-4-12b</code></li> <li><code>moonshotai/kimi-k2-instruct</code></li> <li><code>openai/gpt-oss-120b</code></li> <li><code>openai/gpt-oss-20b</code></li> <li><code>qwen/qwen3-32b</code></li></ul> <h2>Error Handling</h2> <p>The API returns appropriate HTTP status codes:</p> <ul><li><code>200</code>: Success</li> <li><code>303</code>: Redirect required (configuration needed)</li> <li><code>400</code>: Bad request (invalid input or configuration)</li> <li><code>401</code>: Authentication error (invalid API key)</li> <li><code>403</code>: Permission denied</li> <li><code>429</code>: Rate limit exceeded</li></ul> <h2>Troubleshooting</h2> <h3>Common Issues</h3> <ol><li><strong>“Cannot create ‘config.json’ file”</strong>: Check write permissions in the directory</li> <li><strong>“Authentication error”</strong>: Verify your Groq API key in the <code>.env</code> file</li> <li><strong>“Too Many Requests”</strong>: You’ve exceeded Groq’s rate limits</li></ol> <h3>Logs</h3> <p>Check the console output for error messages and server status.</p> <h2>Version</h2> <p>Current version: 2.4</p> <h2>License</h2> <p>Apache Lisence 2.0</p>',1);function $(m){var u=Y(),e=a(O(u),24),c=s(e),i=a(s(c)),f=s(i);t(f,()=>`<code class="language-bash"><span class="token function">git</span> clone https://github.com/christos-golsouzidis/widiscover/
+<span class="token builtin class-name">cd</span> ./widiscover</code>`),n(i),n(c);var p=a(c,2),o=a(s(p)),k=s(o);t(k,()=>'<code class="language-bash">pip <span class="token function">install</span> fastapi uvicorn aiofiles dotenv groq</code>'),n(o);var r=a(o,2),d=s(r);t(d,()=>'<code class="language-bash">uv <span class="token function">add</span> fastapi uvicorn aiofiles dotenv groq</code>'),n(r),n(p);var l=a(p,4),g=a(s(l)),h=s(g);t(h,()=>`<code class="language-bash"><span class="token comment"># Navigate to ui/ directory and build the Svelte app</span>
+<span class="token builtin class-name">cd</span> ui
+<span class="token function">npm</span> run build
+<span class="token builtin class-name">cd</span> <span class="token punctuation">..</span></code>`),n(g),n(l),n(e);var v=a(e,6),j=s(v);t(j,()=>`<code class="language-undefined">widiscover/
+└── main.py              # Main application file
+└── config.json          # Configuration file (auto-generated)
+└── .env                 # Environment variables (auto-generated)
+└── ui/
+│   └── build/           # Frontend build files
+│       └── _app/
+│       └── index.html
+│       └── main.html
+│       └── config.html
+|
+└── README.md</code>`),n(v);var y=a(v,8),E=s(y);t(E,()=>'<code class="language-env">GROQ_API_KEY=&lt;your_groq_api_key_here&gt;</code>'),n(y);var b=a(y,10),A=s(b);t(A,()=>`<code class="language-bash">python main.py <span class="token comment"># or 'python3 main.py'</span></code>`),n(b);var w=a(b,8),R=s(w);t(R,()=>`<code class="language-python"><span class="token decorator annotation punctuation">@app<span class="token punctuation">.</span>get</span><span class="token punctuation">(</span><span class="token string">"/"</span><span class="token punctuation">)</span>
+<span class="token keyword">async</span> <span class="token keyword">def</span> <span class="token function">render_index</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> FileResponse<span class="token punctuation">(</span><span class="token string">'ui/build/index.html'</span><span class="token punctuation">)</span>
+
+<span class="token decorator annotation punctuation">@app<span class="token punctuation">.</span>get</span><span class="token punctuation">(</span><span class="token string">"/main"</span><span class="token punctuation">)</span>
+<span class="token keyword">async</span> <span class="token keyword">def</span> <span class="token function">render_main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> FileResponse<span class="token punctuation">(</span><span class="token string">'ui/build/main.html'</span><span class="token punctuation">)</span>
+
+<span class="token decorator annotation punctuation">@app<span class="token punctuation">.</span>get</span><span class="token punctuation">(</span><span class="token string">"/config"</span><span class="token punctuation">)</span>
+<span class="token keyword">async</span> <span class="token keyword">def</span> <span class="token function">render_config</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> FileResponse<span class="token punctuation">(</span><span class="token string">'ui/build/config.html'</span><span class="token punctuation">)</span>
+</code>`),n(w);var x=a(w,4),G=s(x);t(G,()=>`<code class="language-python">
+<span class="token keyword">class</span> <span class="token class-name">ConfigModel</span><span class="token punctuation">(</span>BaseModel<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    configResultNumberPerPage<span class="token punctuation">:</span> <span class="token builtin">int</span> <span class="token operator">=</span> Field<span class="token punctuation">(</span>ge<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> le<span class="token operator">=</span><span class="token number">10</span><span class="token punctuation">)</span>
+    configChunkLength<span class="token punctuation">:</span> <span class="token builtin">int</span> <span class="token operator">=</span> Field<span class="token punctuation">(</span>ge<span class="token operator">=</span><span class="token number">100</span><span class="token punctuation">,</span> le<span class="token operator">=</span><span class="token number">10000</span><span class="token punctuation">)</span>
+    configChunkOverlap<span class="token punctuation">:</span> <span class="token builtin">int</span> <span class="token operator">=</span> Field<span class="token punctuation">(</span>ge<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span> le<span class="token operator">=</span><span class="token number">2000</span><span class="token punctuation">)</span>
+    configTopKResults<span class="token punctuation">:</span> <span class="token builtin">int</span> <span class="token operator">=</span> Field<span class="token punctuation">(</span>ge<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> le<span class="token operator">=</span><span class="token number">16</span><span class="token punctuation">)</span>
+    configThreshold<span class="token punctuation">:</span> <span class="token builtin">float</span> <span class="token operator">=</span> Field<span class="token punctuation">(</span>ge<span class="token operator">=</span><span class="token number">0.0</span><span class="token punctuation">,</span> le<span class="token operator">=</span><span class="token number">0.75</span><span class="token punctuation">)</span>
+    configDistance<span class="token punctuation">:</span> <span class="token builtin">int</span> <span class="token operator">=</span> Field<span class="token punctuation">(</span>ge<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span> le<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span>
+    configGenerativeModel<span class="token punctuation">:</span> Literal<span class="token punctuation">[</span>
+        <span class="token string">"compound-beta"</span><span class="token punctuation">,</span>
+        <span class="token string">"compound-beta-mini"</span><span class="token punctuation">,</span>
+        <span class="token string">"gemma2-9b-it"</span><span class="token punctuation">,</span>
+        <span class="token string">"llama-3.1-8b-instant"</span><span class="token punctuation">,</span>
+        <span class="token string">"llama-3.3-70b-versatile"</span><span class="token punctuation">,</span>
+        <span class="token string">"meta-llama/llama-4-maverick-17b-128e-instruct"</span><span class="token punctuation">,</span>
+        <span class="token string">"meta-llama/llama-4-scout-17b-16e-instruct"</span><span class="token punctuation">,</span>
+        <span class="token string">"meta-llama/llama-guard-4-12b"</span><span class="token punctuation">,</span>
+        <span class="token string">"moonshotai/kimi-k2-instruct"</span><span class="token punctuation">,</span>
+        <span class="token string">"openai/gpt-oss-120b"</span><span class="token punctuation">,</span>
+        <span class="token string">"openai/gpt-oss-20b"</span><span class="token punctuation">,</span>
+        <span class="token string">"qwen/qwen3-32b"</span><span class="token punctuation">,</span>
+    <span class="token punctuation">]</span></code>`),n(x);var T=a(x,4),q=s(T);t(q,()=>`<code class="language-javascript">  <span class="token function">onMount</span><span class="token punctuation">(</span><span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> result <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">'/api/init'</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>result<span class="token punctuation">.</span>ok <span class="token operator">||</span> result<span class="token punctuation">.</span>redirected<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token keyword">let</span> data <span class="token operator">=</span> <span class="token keyword">await</span> result<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token function">goto</span><span class="token punctuation">(</span>data<span class="token punctuation">.</span>redirects<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+      <span class="token keyword">throw</span> <span class="token function">Error</span><span class="token punctuation">(</span><span class="token string">'Error'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code>`),n(T);var I=a(T,4),M=s(I);t(M,()=>`<code class="language-python"><span class="token decorator annotation punctuation">@app<span class="token punctuation">.</span>get</span><span class="token punctuation">(</span><span class="token string">"/api/init"</span><span class="token punctuation">)</span>
+<span class="token keyword">async</span> <span class="token keyword">def</span> <span class="token function">get_init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">'''
+    GET /api/init:
+    Checks for required configuration files and redirects accordingly.
+    
+    Behavior:
+    1. If 'config.json' doesn't exist, creates it with default values.
+    2. If 'config.json' exists but is invalid/empty, overwrites it with default values.
+    3. If '.env' doesn't exist, creates it with empty GROQ_API_KEY.
+    4. If '.env' exists but GROQ_API_KEY is empty or missing, notes the issue.
+    
+    Redirect logic:
+    - Redirects to "/main" ONLY if both:
+        a) 'config.json' exists AND is valid (parses successfully to ConfigModel)
+        b) '.env' exists AND GROQ_API_KEY is not empty
+    
+    - Redirects to "/config" if ANY of these conditions are met:
+        a) 'config.json' was created or overwritten
+        b) '.env' was created
+        c) GROQ_API_KEY is empty
+        d) 'config.json' is invalid/empty
+    
+    Response format:
+        success:
+        &#123;
+            "status": 303,
+            "redirects": "/main" or "/config"
+        &#125;
+    
+    Error handling:
+        Raises HTTPException(403, "Permission denied: cannot &lt;operation> &lt;file>")
+        when file operations fail.
+    '''</span>
+    path <span class="token operator">=</span> <span class="token string">'/main'</span>
+    <span class="token comment"># if there is no config.json create it and set the default values</span>
+    <span class="token keyword">if</span> <span class="token keyword">not</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>exists<span class="token punctuation">(</span><span class="token string">'config.json'</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            <span class="token keyword">async</span> <span class="token keyword">with</span> aiofiles<span class="token punctuation">.</span><span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string">'config.json'</span><span class="token punctuation">,</span> <span class="token string">'w'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+                <span class="token keyword">await</span> f<span class="token punctuation">.</span>write<span class="token punctuation">(</span>json<span class="token punctuation">.</span>dumps<span class="token punctuation">(</span>DEFAULT_CONFIG<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            path <span class="token operator">=</span> <span class="token string">'/config'</span>
+        <span class="token keyword">except</span> Exception<span class="token punctuation">:</span>
+            <span class="token keyword">raise</span> HTTPException<span class="token punctuation">(</span><span class="token number">403</span><span class="token punctuation">,</span> <span class="token string">'Cannot create 'config.json' file.'</span><span class="token punctuation">)</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        <span class="token comment"># if there is 'config.json' check if it is valid</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            <span class="token keyword">async</span> <span class="token keyword">with</span> aiofiles<span class="token punctuation">.</span><span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string">'config.json'</span><span class="token punctuation">,</span> <span class="token string">'r'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+                content <span class="token operator">=</span> <span class="token keyword">await</span> f<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            data <span class="token operator">=</span> ConfigModel<span class="token punctuation">(</span><span class="token operator">**</span>json<span class="token punctuation">.</span>loads<span class="token punctuation">(</span>content<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token keyword">if</span> <span class="token keyword">not</span> data<span class="token punctuation">:</span>
+                path <span class="token operator">=</span> <span class="token string">'/config'</span>
+        <span class="token keyword">except</span> Exception<span class="token punctuation">:</span>
+            <span class="token keyword">try</span><span class="token punctuation">:</span>
+                <span class="token keyword">async</span> <span class="token keyword">with</span> aiofiles<span class="token punctuation">.</span><span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string">'config.json'</span><span class="token punctuation">,</span> <span class="token string">'w'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+                    <span class="token keyword">await</span> f<span class="token punctuation">.</span>write<span class="token punctuation">(</span>json<span class="token punctuation">.</span>dumps<span class="token punctuation">(</span>DEFAULT_CONFIG<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                path <span class="token operator">=</span> <span class="token string">'/config'</span>
+            <span class="token keyword">except</span> Exception<span class="token punctuation">:</span>
+                <span class="token keyword">raise</span> HTTPException<span class="token punctuation">(</span><span class="token number">403</span><span class="token punctuation">,</span> <span class="token string">'Cannot create 'config.json' file.'</span><span class="token punctuation">)</span>
+    <span class="token comment"># if there is no .env create it with the key having an empty value and send info for redirecting</span>
+    <span class="token keyword">if</span> <span class="token keyword">not</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>exists<span class="token punctuation">(</span><span class="token string">'.env'</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            <span class="token keyword">async</span> <span class="token keyword">with</span> aiofiles<span class="token punctuation">.</span><span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string">'.env'</span><span class="token punctuation">,</span><span class="token string">'w'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+                <span class="token keyword">await</span> f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">'GROQ_API_KEY='</span><span class="token punctuation">)</span>
+            path <span class="token operator">=</span> <span class="token string">'/config'</span>
+        <span class="token keyword">except</span> Exception<span class="token punctuation">:</span>
+            <span class="token keyword">raise</span> HTTPException<span class="token punctuation">(</span><span class="token number">403</span><span class="token punctuation">,</span> <span class="token string">'Cannot create '.env' file.'</span><span class="token punctuation">)</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            dotenv<span class="token punctuation">.</span>load_dotenv<span class="token punctuation">(</span>override<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+            <span class="token keyword">if</span> <span class="token keyword">not</span> os<span class="token punctuation">.</span>getenv<span class="token punctuation">(</span>key<span class="token operator">=</span><span class="token string">'GROQ_API_KEY'</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                path <span class="token operator">=</span> <span class="token string">'/config'</span>
+        <span class="token keyword">except</span> Exception<span class="token punctuation">:</span>
+            <span class="token keyword">raise</span> HTTPException<span class="token punctuation">(</span><span class="token number">403</span><span class="token punctuation">,</span> <span class="token string">'Cannot read from '.env' file.'</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token punctuation">&#123;</span>
+        <span class="token string">'status'</span><span class="token punctuation">:</span> <span class="token number">303</span><span class="token punctuation">,</span>
+        <span class="token string">'redirects'</span><span class="token punctuation">:</span> path<span class="token punctuation">,</span>
+    <span class="token punctuation">&#125;</span></code>`),n(I);var P=a(I,4),D=s(P);t(D,()=>`<code class="language-svelte"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script"><span class="token language-javascript">
+  <span class="token comment">/*
+    /config
+  */</span>
+  <span class="token keyword">import</span> Button <span class="token keyword">from</span> <span class="token string">"../../components/Button.svelte"</span><span class="token punctuation">;</span>
+  <span class="token keyword">import</span> Input <span class="token keyword">from</span> <span class="token string">"../../components/Input.svelte"</span><span class="token punctuation">;</span>
+  <span class="token keyword">import</span> <span class="token punctuation">&#123;</span> goto <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">"$app/navigation"</span><span class="token punctuation">;</span>
+  <span class="token keyword">import</span> <span class="token punctuation">&#123;</span> onMount <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">"svelte"</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">const</span> <span class="token constant">DEFAULTGENERATIVEMODEL</span> <span class="token operator">=</span> <span class="token string">"llama-3.3-70b-versatile"</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">let</span> envGroqKey <span class="token operator">=</span> <span class="token function">$state</span><span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">let</span> configResultNumberPerPage <span class="token operator">=</span> <span class="token function">$state</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">let</span> configChunkLength <span class="token operator">=</span> <span class="token function">$state</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">let</span> configChunkOverlap <span class="token operator">=</span> <span class="token function">$state</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">let</span> configTopKResults <span class="token operator">=</span> <span class="token function">$state</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">let</span> configThreshold <span class="token operator">=</span> <span class="token function">$state</span><span class="token punctuation">(</span><span class="token number">0.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">let</span> configDistance <span class="token operator">=</span> <span class="token function">$state</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">let</span> configGenerativeModel <span class="token operator">=</span> <span class="token function">$state</span><span class="token punctuation">(</span><span class="token constant">DEFAULTGENERATIVEMODEL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">let</span> generativeModels <span class="token operator">=</span> <span class="token punctuation">[</span>
+    <span class="token string">"compound-beta"</span><span class="token punctuation">,</span>
+    <span class="token string">"compound-beta-mini"</span><span class="token punctuation">,</span>
+    <span class="token string">"gemma2-9b-it"</span><span class="token punctuation">,</span>
+    <span class="token string">"llama-3.1-8b-instant"</span><span class="token punctuation">,</span>
+    <span class="token string">"llama-3.3-70b-versatile"</span><span class="token punctuation">,</span>
+    <span class="token string">"meta-llama/llama-4-maverick-17b-128e-instruct"</span><span class="token punctuation">,</span>
+    <span class="token string">"meta-llama/llama-4-scout-17b-16e-instruct"</span><span class="token punctuation">,</span>
+    <span class="token string">"meta-llama/llama-guard-4-12b"</span><span class="token punctuation">,</span>
+    <span class="token string">"moonshotai/kimi-k2-instruct"</span><span class="token punctuation">,</span>
+    <span class="token string">"openai/gpt-oss-120b"</span><span class="token punctuation">,</span>
+    <span class="token string">"openai/gpt-oss-20b"</span><span class="token punctuation">,</span>
+    <span class="token string">"qwen/qwen3-32b"</span><span class="token punctuation">,</span>
+  <span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+
+  <span class="token function">onMount</span><span class="token punctuation">(</span><span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> response <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">"/api/config"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> data <span class="token operator">=</span> <span class="token keyword">await</span> response<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    configResultNumberPerPage <span class="token operator">=</span> data<span class="token punctuation">.</span>configResultNumberPerPage<span class="token punctuation">;</span>
+    configChunkLength <span class="token operator">=</span> data<span class="token punctuation">.</span>configChunkLength<span class="token punctuation">;</span>
+    configChunkOverlap <span class="token operator">=</span> data<span class="token punctuation">.</span>configChunkOverlap<span class="token punctuation">;</span>
+    configTopKResults <span class="token operator">=</span> data<span class="token punctuation">.</span>configTopKResults<span class="token punctuation">;</span>
+    configThreshold <span class="token operator">=</span> data<span class="token punctuation">.</span>configThreshold<span class="token punctuation">;</span>
+    configDistance <span class="token operator">=</span> data<span class="token punctuation">.</span>configDistance<span class="token punctuation">;</span>
+    configGenerativeModel <span class="token operator">=</span> data<span class="token punctuation">.</span>configGenerativeModel<span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+  <span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">restoreDefaultValues</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token keyword">const</span> response <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">"/api/default"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> data <span class="token operator">=</span> <span class="token keyword">await</span> response<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    configResultNumberPerPage <span class="token operator">=</span> data<span class="token punctuation">.</span>configResultNumberPerPage<span class="token punctuation">;</span>
+    configChunkLength <span class="token operator">=</span> data<span class="token punctuation">.</span>configChunkLength<span class="token punctuation">;</span>
+    configChunkOverlap <span class="token operator">=</span> data<span class="token punctuation">.</span>configChunkOverlap<span class="token punctuation">;</span>
+    configTopKResults <span class="token operator">=</span> data<span class="token punctuation">.</span>configTopKResults<span class="token punctuation">;</span>
+    configThreshold <span class="token operator">=</span> data<span class="token punctuation">.</span>configThreshold<span class="token punctuation">;</span>
+    configDistance <span class="token operator">=</span> data<span class="token punctuation">.</span>configDistance<span class="token punctuation">;</span>
+    configGenerativeModel <span class="token operator">=</span> data<span class="token punctuation">.</span>configGenerativeModel<span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+
+
+  <span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">fetchData</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> response <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">"/api/config"</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
+      method<span class="token operator">:</span> <span class="token string">"POST"</span><span class="token punctuation">,</span>
+      headers<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token string">"Content-Type"</span><span class="token operator">:</span> <span class="token string">"application/json"</span><span class="token punctuation">,</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      body<span class="token operator">:</span> <span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+        envGroqKey<span class="token operator">:</span> envGroqKey<span class="token punctuation">,</span>
+        configResultNumberPerPage<span class="token operator">:</span> configResultNumberPerPage<span class="token punctuation">,</span>
+        configChunkLength<span class="token operator">:</span> configChunkLength<span class="token punctuation">,</span>
+        configChunkOverlap<span class="token operator">:</span> configChunkOverlap<span class="token punctuation">,</span>
+        configTopKResults<span class="token operator">:</span> configTopKResults<span class="token punctuation">,</span>
+        configThreshold<span class="token operator">:</span> configThreshold<span class="token punctuation">,</span>
+        configDistance<span class="token operator">:</span> configDistance<span class="token punctuation">,</span>
+        configGenerativeModel<span class="token operator">:</span> configGenerativeModel<span class="token punctuation">,</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>response<span class="token punctuation">.</span>ok<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token keyword">const</span> data <span class="token operator">=</span> <span class="token keyword">await</span> response<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      
+      window<span class="token punctuation">.</span>location<span class="token punctuation">.</span>href <span class="token operator">=</span> data<span class="token punctuation">.</span>redirects<span class="token punctuation">;</span>
+      <span class="token keyword">return</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>section</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>mx-4 md:mx-16 lg:mx-32 xl:mx-48 2xl:mx-64<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text-center mt-4 mb-26<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>bg-[rgb(20,20,20)] border-black border-1 rounded-lg p-8 mb-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text-4xl font-bold mb-4<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Configuration<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h2</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text-xl font-semibold mb-2<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        Manage your application settings here.
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h2</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>mb-4<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>password<span class="token punctuation">"</span></span> <span class="token attr-name">placeholder</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Groq API key<span class="token punctuation">"</span></span> <span class="token attr-name"><span class="token namespace">bind:</span>value=</span><span class="token language-javascript"><span class="token punctuation">&#123;</span>envGroqKey<span class="token punctuation">&#125;</span></span><span class="token punctuation">></span></span>
+        Set / reset the Groq API key by entering the value <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>strong</span><span class="token punctuation">></span></span>or<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>strong</span><span class="token punctuation">></span></span> leave
+        it empty if already set:
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Input</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>mb-4<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Input</span>
+        <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>number<span class="token punctuation">"</span></span>
+        <span class="token attr-name">placeholder</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Number of documents<span class="token punctuation">"</span></span>
+        <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>1<span class="token punctuation">"</span></span>
+        <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>10<span class="token punctuation">"</span></span>
+        <span class="token attr-name"><span class="token namespace">bind:</span>value=</span><span class="token language-javascript"><span class="token punctuation">&#123;</span>configResultNumberPerPage<span class="token punctuation">&#125;</span></span>
+      <span class="token punctuation">></span></span>
+        Number of documents to search in:
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Input</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>mb-4<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Input</span>
+        <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>number<span class="token punctuation">"</span></span>
+        <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>100<span class="token punctuation">"</span></span>
+        <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>8000<span class="token punctuation">"</span></span>
+        <span class="token attr-name"><span class="token namespace">bind:</span>value=</span><span class="token language-javascript"><span class="token punctuation">&#123;</span>configChunkLength<span class="token punctuation">&#125;</span></span>
+        <span class="token attr-name">placeholder</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Chunk length<span class="token punctuation">"</span></span>
+      <span class="token punctuation">></span></span>
+        Length of chunk:
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Input</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>mb-4<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Input</span>
+        <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>number<span class="token punctuation">"</span></span>
+        <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>0<span class="token punctuation">"</span></span>
+        <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>1000<span class="token punctuation">"</span></span>
+        <span class="token attr-name"><span class="token namespace">bind:</span>value=</span><span class="token language-javascript"><span class="token punctuation">&#123;</span>configChunkOverlap<span class="token punctuation">&#125;</span></span>
+        <span class="token attr-name">placeholder</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Overlap<span class="token punctuation">"</span></span>
+      <span class="token punctuation">></span></span>
+        Overlap between chunks:
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Input</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>mb-4<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Input</span>
+        <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>number<span class="token punctuation">"</span></span>
+        <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>1<span class="token punctuation">"</span></span>
+        <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>8<span class="token punctuation">"</span></span>
+        <span class="token attr-name"><span class="token namespace">bind:</span>value=</span><span class="token language-javascript"><span class="token punctuation">&#123;</span>configTopKResults<span class="token punctuation">&#125;</span></span>
+        <span class="token attr-name">placeholder</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Number of relevant results<span class="token punctuation">"</span></span>
+      <span class="token punctuation">></span></span>
+        Number of relevant results:
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Input</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>mb-4 flex<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Input</span>
+        <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>range<span class="token punctuation">"</span></span>
+        <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>0<span class="token punctuation">"</span></span>
+        <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>2<span class="token punctuation">"</span></span>
+        <span class="token attr-name"><span class="token namespace">bind:</span>value=</span><span class="token language-javascript"><span class="token punctuation">&#123;</span>configDistance<span class="token punctuation">&#125;</span></span>
+        <span class="token attr-name">placeholder</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Spelling Match Sensitivity<span class="token punctuation">"</span></span>
+      <span class="token punctuation">></span></span>
+        Spelling<span class="token entity named-entity" title="&nbsp;">&amp;nbsp;</span>Match<span class="token entity named-entity" title="&nbsp;">&amp;nbsp;</span>Sensitivity:
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Input</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>ml-8 text-gray-800<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token language-javascript"><span class="token punctuation">&#123;</span>#<span class="token keyword">if</span> configDistance <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">&#125;</span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span>No correction<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
+        <span class="token language-javascript"><span class="token punctuation">&#123;</span><span class="token operator">:</span><span class="token keyword">else</span> <span class="token keyword">if</span> configDistance <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">&#125;</span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span>Corrects words with 1 typo<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
+        <span class="token language-javascript"><span class="token punctuation">&#123;</span><span class="token operator">:</span><span class="token keyword">else</span><span class="token punctuation">&#125;</span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span>
+            Corrects words with up to 2 typos.
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
+        <span class="token language-javascript"><span class="token punctuation">&#123;</span><span class="token operator">/</span><span class="token keyword">if</span><span class="token punctuation">&#125;</span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>mb-4 text-left<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text-black w-full<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Generative model:<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>select</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text-black border-black border-1 rounded-lg p-2 w-full my-2<span class="token punctuation">"</span></span> <span class="token attr-name"><span class="token namespace">bind:</span>value=</span><span class="token language-javascript"><span class="token punctuation">&#123;</span>configGenerativeModel<span class="token punctuation">&#125;</span></span><span class="token punctuation">></span></span>
+        <span class="token each"><span class="token punctuation">&#123;</span><span class="token keyword">#each</span> <span class="token language-javascript">generativeModels </span><span class="token keyword">as</span> <span class="token language-javascript">model<span class="token punctuation">&#125;</span></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>option</span> <span class="token attr-name">value=</span><span class="token language-javascript"><span class="token punctuation">&#123;</span>model<span class="token punctuation">&#125;</span></span><span class="token punctuation">></span></span><span class="token language-javascript"><span class="token punctuation">&#123;</span>model<span class="token punctuation">&#125;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>option</span><span class="token punctuation">></span></span>
+        <span class="token each"><span class="token punctuation">&#123;</span><span class="token keyword">/each</span><span class="token punctuation">&#125;</span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>select</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>mb-12<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Input</span>
+        <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>number<span class="token punctuation">"</span></span>
+        <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>0<span class="token punctuation">"</span></span>
+        <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>1<span class="token punctuation">"</span></span>
+        <span class="token attr-name">step</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>0.05<span class="token punctuation">"</span></span>
+        <span class="token attr-name"><span class="token namespace">bind:</span>value=</span><span class="token language-javascript"><span class="token punctuation">&#123;</span>configThreshold<span class="token punctuation">&#125;</span></span>
+        <span class="token attr-name">placeholder</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Threshold of relevant results<span class="token punctuation">"</span></span>
+      <span class="token punctuation">></span></span>
+        Threshold of relevant results:
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Input</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>grid grid-cols-3 gap-4<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>mx-0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Button</span>
+          <span class="token attr-name">event=</span><span class="token language-javascript"><span class="token punctuation">&#123;</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token function">restoreDefaultValues</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#125;</span></span><span class="token punctuation">></span></span>
+          restore defaults
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Button</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>mx-0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Button</span>
+          <span class="token attr-name">event=</span><span class="token language-javascript"><span class="token punctuation">&#123;</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+            <span class="token function">goto</span><span class="token punctuation">(</span><span class="token string">"/main"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span></span>
+          <span class="token punctuation">></span></span>
+          discard settings
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Button</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>mx-0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Button</span> <span class="token attr-name">event=</span><span class="token language-javascript"><span class="token punctuation">&#123;</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token function">fetchData</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#125;</span></span><span class="token punctuation">></span></span>
+          save settings
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Button</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>section</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>style</span><span class="token punctuation">></span></span><span class="token style"><span class="token language-css">
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>style</span><span class="token punctuation">></span></span></code>`),n(P),N(36),C(m,u)}var H=_('<section><div class="portfolio my-8"><!> <!></div> <div class="mt-8 mb-20"><div class="portfolio"><h2>See also</h2></div> <p>See some other relevant projects:</p> <div class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 my-8"></div></div></section>');function X(m){let u="Widiscover",e=["front end","back end","databases","external APIs"],c=[["svelte","tailwindCSS"],["python","FastAPI"],["QDrant"],["Groq Cloud API"]],i="https://github.com/christos-golsouzidis/widiscover",f=[{text:"Infrang (INFormation Retrieval and ANswer Generation)",link:"infrang"},{text:"Anti-captcha application",link:"anticaptcha"},{text:"Text recognition application",link:"textrecognition"}];var p=H(),o=s(p),k=s(o);B(k,{titleList:e,techList:c,githubLink:i,name:u});var r=a(k,2);$(r),n(o);var d=a(o,2),l=a(s(d),4);L(l,5,()=>f,K,(g,h)=>{F(g,{get items(){return S(h)}})}),n(l),n(d),n(p),C(m,p)}export{X as component};
