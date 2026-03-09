@@ -1,0 +1,1 @@
+import{t as e,a as s}from"../chunks/DZNZd60J.js";import"../chunks/_UGq2cT-.js";import{y as i,z as m}from"../chunks/BdCudQcb.js";import{s as p}from"../chunks/C0OWxYRB.js";/* empty css                *//* empty css                */var n=e("<section><!></section>");function y(t,r){var o=n(),a=i(o);p(a,r,"default",{},null),m(o),s(t,o)}export{y as component};
